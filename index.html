@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GED 109 – STS Final Exam Mock Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:#f0ebf8;min-height:100vh;padding:0 0 60px}
+.form-header{background:linear-gradient(135deg,#6741d9 0%,#9c4dcc 100%);height:12px;border-radius:12px 12px 0 0;width:100%;max-width:720px;margin:32px auto 0}
+.form-title-card{background:#fff;max-width:720px;margin:0 auto;padding:28px 32px 24px;border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;border-top:4px solid #6741d9;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.form-title-card h1{font-family:'Google Sans',sans-serif;font-size:30px;font-weight:700;color:#202124;margin-bottom:6px}
+.form-title-card .subtitle{font-size:13.5px;color:#5f6368;margin-bottom:10px}
+.topic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.topic-tag{background:#ede7f6;color:#6741d9;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;letter-spacing:.3px}
+.section-heading{max-width:720px;margin:20px auto 0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:16px 32px;box-shadow:0 1px 2px rgba(0,0,0,.07)}
+.section-heading h2{font-family:'Google Sans',sans-serif;font-size:15px;font-weight:700;color:#6741d9;letter-spacing:.2px}
+.question-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;max-width:720px;margin:12px auto 0;padding:24px 32px;box-shadow:0 1px 2px rgba(0,0,0,.07);transition:border-color .2s}
+.question-card:focus-within{border-color:#6741d9}
+.question-number{font-size:11px;font-weight:500;color:#9e9e9e;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.question-text{font-size:15px;color:#202124;font-weight:500;line-height:1.55;margin-bottom:18px}
+.options-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.option-label{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:6px;cursor:pointer;transition:background .15s;font-size:14px;color:#3c4043;line-height:1.5}
+.option-label:hover{background:#f8f4ff}
+.option-label input[type="radio"]{accent-color:#6741d9;margin-top:2px;flex-shrink:0;width:16px;height:16px;cursor:pointer}
+.question-card.correct{border-color:#34a853;border-left:4px solid #34a853}
+.question-card.incorrect{border-color:#ea4335;border-left:4px solid #ea4335}
+.question-card.unanswered{border-color:#fbbc05;border-left:4px solid #fbbc05}
+.result-badge{display:none;align-items:center;gap:6px;font-size:13px;font-weight:500;margin-top:14px;padding:8px 12px;border-radius:6px}
+.correct-badge{background:#e6f4ea;color:#137333;display:flex!important}
+.incorrect-badge{background:#fce8e6;color:#c5221f;display:flex!important}
+.unanswered-badge{background:#fef7e0;color:#b06000;display:flex!important}
+.correct-answer-note{font-size:13px;color:#137333;margin-top:6px;padding:6px 12px;background:#e6f4ea;border-radius:5px;display:none}
+.option-label.highlight-correct{background:#e6f4ea!important;color:#137333;font-weight:500}
+.option-label.highlight-wrong{background:#fce8e6!important;color:#c5221f;font-weight:500}
+.controls{max-width:720px;margin:24px auto 0;display:flex;justify-content:flex-end;gap:14px;padding:0 4px}
+.btn{font-family:'Google Sans',sans-serif;font-size:14px;font-weight:500;padding:10px 28px;border-radius:4px;border:none;cursor:pointer;transition:box-shadow .2s,background .2s}
+.btn-clear{background:transparent;color:#6741d9;border:1px solid #c5b9f0}
+.btn-clear:hover{background:#ede7f6}
+.btn-submit{background:#6741d9;color:#fff;box-shadow:0 1px 3px rgba(103,65,217,.4)}
+.btn-submit:hover{background:#5634c0;box-shadow:0 2px 6px rgba(103,65,217,.5)}
+.btn-submit:disabled{background:#c5b9f0;cursor:not-allowed;box-shadow:none}
+.score-card{display:none;background:#fff;border:1px solid #e0e0e0;border-radius:8px;max-width:720px;margin:20px auto 0;padding:32px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.score-card h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#202124;margin-bottom:8px}
+.score-big{font-family:'Google Sans',sans-serif;font-size:56px;font-weight:700;color:#6741d9;line-height:1.1;margin:12px 0 4px}
+.score-label{font-size:14px;color:#5f6368;margin-bottom:20px}
+.score-bar-wrap{background:#ede7f6;border-radius:999px;height:10px;margin:0 auto 20px;max-width:400px;overflow:hidden}
+.score-bar-fill{height:100%;background:linear-gradient(90deg,#6741d9,#9c4dcc);border-radius:999px;transition:width 1s ease;width:0%}
+.score-breakdown{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+.score-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.score-stat span:first-child{font-size:22px;font-weight:700}
+.score-stat span:last-child{font-size:12px;color:#5f6368}
+.stat-correct{color:#34a853}.stat-incorrect{color:#ea4335}.stat-skipped{color:#fbbc05}
+.review-note{font-size:13px;color:#5f6368;margin-bottom:18px;line-height:1.6}
+.btn-review{background:#fff;color:#6741d9;border:1px solid #6741d9;font-family:'Google Sans',sans-serif;font-size:14px;font-weight:500;padding:10px 28px;border-radius:4px;cursor:pointer;margin-right:10px}
+.btn-review:hover{background:#ede7f6}
+.btn-retake{background:#6741d9;color:#fff;border:none;font-family:'Google Sans',sans-serif;font-size:14px;font-weight:500;padding:10px 28px;border-radius:4px;cursor:pointer}
+.btn-retake:hover{background:#5634c0}
+.required-note{max-width:720px;margin:10px auto 0;font-size:12px;color:#5f6368;padding:0 4px}
+@media(max-width:760px){
+  .form-title-card,.question-card,.section-heading,.score-card,.controls{margin-left:12px;margin-right:12px}
+  .form-header{margin-left:12px;margin-right:12px}
+  .form-title-card h1{font-size:22px}
+  .score-big{font-size:42px}
+}
+</style>
+</head>
+<body>
+
+<div class="form-header"></div>
+<div class="form-title-card">
+  <h1>GED 109 – STS Final Exam Mock Quiz</h1>
+  <p class="subtitle">Science, Technology and Society &nbsp;·&nbsp; Final Reviewer Quiz &nbsp;·&nbsp; 60 Questions</p>
+  <div class="topic-tags">
+    <span class="topic-tag">Philosophy of Technology</span>
+    <span class="topic-tag">Good Life</span>
+    <span class="topic-tag">Public Goods</span>
+    <span class="topic-tag">AI Ethics</span>
+    <span class="topic-tag">Information Age</span>
+    <span class="topic-tag">Biodiversity</span>
+    <span class="topic-tag">Nanotechnology</span>
+    <span class="topic-tag">Biotechnology</span>
+  </div>
+</div>
+
+<p class="required-note">* 60 questions · Submit to see your score and correct answers.</p>
+
+<div id="quiz-form"></div>
+
+<div class="controls">
+  <button class="btn btn-clear" onclick="clearAll()">Clear all</button>
+  <button class="btn btn-submit" id="submitBtn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<div class="score-card" id="scoreCard">
+  <h2>Your Score</h2>
+  <div class="score-big" id="scoreBig"></div>
+  <div class="score-label" id="scoreLabel"></div>
+  <div class="score-bar-wrap"><div class="score-bar-fill" id="scoreBar"></div></div>
+  <div class="score-breakdown">
+    <div class="score-stat"><span class="stat-correct" id="statCorrect">0</span><span>Correct</span></div>
+    <div class="score-stat"><span class="stat-incorrect" id="statIncorrect">0</span><span>Incorrect</span></div>
+    <div class="score-stat"><span class="stat-skipped" id="statSkipped">0</span><span>Skipped</span></div>
+  </div>
+  <p class="review-note">Scroll down to review all answers. Correct answers are highlighted in <strong style="color:#137333">green</strong>; your wrong picks are in <strong style="color:#c5221f">red</strong>.</p>
+  <button class="btn-review" onclick="scrollToFirst()">Review Answers ↓</button>
+  <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
+</div>
+
+<script>
+const questions = [
+
+  // ─── TOPIC 1: Heidegger (10 items) ───
+  { section:"Topic 1: Philosophy of Technology & Human Flourishing",
+    q:"According to Heidegger, technology is best described as:",
+    opts:["A neutral instrument for achieving goals","A way of revealing or disclosing reality","A product of human creativity only","A form of economic productivity"],
+    answer:1 },
+  { q:"Heidegger's term for the essence of modern technology — the mindset that reduces everything to resources — is:",
+    opts:["Standing Reserve","Calculative Thinking","Enframing (Gestell)","Meditative Thinking"],
+    answer:2 },
+  { q:"Under Enframing, forests, rivers, and even humans are reduced to what Heidegger calls:",
+    opts:["Public Goods","Standing Reserve (Bestand)","Moral Agents","Digital Resources"],
+    answer:1 },
+  { q:"Which mode of thinking does Heidegger propose as an antidote to Enframing?",
+    opts:["Calculative Thinking","Algorithmic Thinking","Meditative Thinking","Instrumental Thinking"],
+    answer:2 },
+  { q:"A company views its employees purely as 'human resources' to maximize output. This best exemplifies Heidegger's concept of:",
+    opts:["Eudaimonia","Meditative Thinking","Standing Reserve","Virtue Ethics"],
+    answer:2 },
+  { q:"Calculative thinking, in Heidegger's framework, is primarily focused on:",
+    opts:["Spiritual growth and meaning","Efficiency, profit, and measurable outcomes","Biodiversity and ecology","Collective well-being"],
+    answer:1 },
+  { q:"The term 'Way of Revealing' in Heidegger's philosophy means:",
+    opts:["Exposing government secrets","How technology discloses reality, shaping how we perceive and interact with the world","A method for teaching philosophy","The process of inventing new tools"],
+    answer:1 },
+  { q:"Which of the following scenarios best illustrates the concept of Enframing?",
+    opts:["A student meditating on the meaning of life","A river being valued only as a hydroelectric power source","A teacher fostering creativity in students","A community planting trees for future generations"],
+    answer:1 },
+  { q:"Heidegger argues that the primary danger of modern technology is:",
+    opts:["It is too expensive to maintain","It reduces rich, complex realities to their purely functional or economic value","It causes physical harm to users","It replaces all human jobs"],
+    answer:1 },
+  { q:"In Heidegger's framework, Meditative Thinking is described as:",
+    opts:["Focusing on maximizing output","A deeper reflective thinking that seeks meaning and the true essence of things","The process of calculating profit margins","Analyzing data for efficiency"],
+    answer:1 },
+
+  // ─── TOPIC 1: Aristotle & Good Life (8 items) ───
+  { q:"Aristotle's concept of Eudaimonia is best translated as:",
+    opts:["Maximum pleasure","Technological progress","Living and doing well through virtue and purpose","Material wealth and convenience"],
+    answer:2 },
+  { q:"Which of the following correctly describes Virtue (Arete) according to Aristotle?",
+    opts:["A form of digital skill","Excellence of character enabling a person to live well","The ability to use technology efficiently","Emotional satisfaction from pleasure"],
+    answer:1 },
+  { q:"The Good Life, according to Aristotle, CANNOT be reduced to:",
+    opts:["Meaningful relationships","Virtue and purpose","Convenience or material wealth","Participation in society"],
+    answer:2 },
+  { q:"Human Flourishing in Aristotle's view is:",
+    opts:["A purely individual achievement","Both a personal AND shared/collective condition","Only possible through wealth","Dependent on advanced technology"],
+    answer:1 },
+  { q:"Which of the following represents the relationship between convenience and the Good Life?",
+    opts:["Convenience and the Good Life are identical concepts","Overreliance on convenience can lead to stress, comparison, and loss of meaning","Convenience always leads to human flourishing","Aristotle endorsed convenience as the highest good"],
+    answer:1 },
+  { q:"When technology benefits the wealthy while leaving the poor behind, this is called:",
+    opts:["Algorithmic Bias","Nano Surveillance","Digital Inequality","Germline Therapy"],
+    answer:2 },
+  { q:"A Moral Agent is defined as:",
+    opts:["An AI system that follows strict rules","An entity that can make ethical decisions based on values, emotions, and culture","Any machine capable of autonomous action","A government body that regulates technology"],
+    answer:1 },
+  { q:"According to the reviewer, the role of technology in the Good Life should be:",
+    opts:["The primary force controlling our daily choices","A replacement for human relationships","A tool used ethically to support human growth","A source of unlimited pleasure and ease"],
+    answer:2 },
+
+  // ─── TOPIC 2: Public Goods (6 items) ───
+  { section:"Topic 2: Public Goods, Technology, and Society",
+    q:"A Public Good is characterized by being:",
+    opts:["Exclusive and rivalrous","Non-excludable and non-rivalrous","Available only to paying subscribers","Produced only by the government"],
+    answer:1 },
+  { q:"Which of the following is the BEST example of a Public Good?",
+    opts:["A luxury car","A private smartphone","Clean air and public education","A paid streaming service"],
+    answer:2 },
+  { q:"Non-rivalrous means:",
+    opts:["Only one person can benefit from it at a time","One person's use reduces availability for others","One person's use does NOT reduce it for others","The good is only available to citizens"],
+    answer:2 },
+  { q:"Non-excludable means:",
+    opts:["You can prevent certain people from using the good","You cannot prevent anyone from benefiting from it","The good expires after use","Only high-income users can access it"],
+    answer:1 },
+  { q:"Which of the following is correctly classified as a Private Good?",
+    opts:["National defense","Public healthcare","Clean air","A luxury car or private smartphone"],
+    answer:3 },
+  { q:"Public Education and Public Healthcare are highlighted as prime examples of public goods because they:",
+    opts:["Generate profit for the government","Promote equality and human flourishing for all members of society","Are available only in wealthy countries","Require no funding to maintain"],
+    answer:1 },
+
+  // ─── TOPIC 3: AI Ethics (10 items) ───
+  { section:"Topic 3: Artificial Intelligence & Ethical Frameworks",
+    q:"The Trolley Problem is used in AI ethics primarily to analyze:",
+    opts:["How AI learns language","How autonomous machines should make life-and-death decisions","The economic cost of AI development","Algorithmic bias in hiring"],
+    answer:1 },
+  { q:"Algorithmic Bias occurs when:",
+    opts:["An AI processes data too slowly","Human prejudices are encoded into AI systems through biased training data","A robot malfunctions mechanically","An AI refuses to follow commands"],
+    answer:1 },
+  { q:"In his essay 'The Future Does Not Need Us,' Bill Joy warns that:",
+    opts:["AI will make humans lazy","Self-replicating technologies could eventually threaten human survival","The internet should be censored","Robots will replace all jobs by 2030"],
+    answer:1 },
+  { q:"When an autonomous AI causes harm, who is primarily responsible?",
+    opts:["No one, since AI acts independently","The government that allowed its use","Its designers, programmers, and corporations","The user who purchased it"],
+    answer:2 },
+  { q:"Deontological ethics applied to AI means:",
+    opts:["AI should maximize overall happiness","AI must follow strict moral rules regardless of consequences","AI should act based on what a virtuous person would do","AI should prioritize the most pleasurable outcome"],
+    answer:1 },
+  { q:"Utilitarian ethics applied to AI means:",
+    opts:["AI follows absolute rules with no exceptions","AI should take the action producing the greatest good for the greatest number","AI is guided by what brings the most pleasure","AI uses virtue as its primary guide"],
+    answer:1 },
+  { q:"Virtue Ethics asks AI developers and users:",
+    opts:["What maximizes profit?","What follows the legal code?","What would a person of good character do?","What produces the most pleasure?"],
+    answer:2 },
+  { q:"Which ethical framework is NOT considered a standard framework for AI governance?",
+    opts:["Deontology","Utilitarianism","Virtue Ethics","Hedonism"],
+    answer:3 },
+  { q:"Why is accountability in AI described as 'difficult'?",
+    opts:["Because AI systems are owned by many shareholders","Because AI decisions emerge from complex, layered interactions between code and data, making it hard to pinpoint a single responsible party","Because governments refuse to regulate AI","Because AI developers are anonymous"],
+    answer:1 },
+  { q:"Bill Joy's concern about self-replicating technologies specifically includes which of the following?",
+    opts:["Social media platforms","AI, nanobots, and genetically engineered organisms","Search engines and databases","Smartphones and tablets"],
+    answer:1 },
+
+  // ─── TOPIC 4: Information Age (8 items) ───
+  { section:"Topic 4: The Information Age & Media",
+    q:"Johannes Gutenberg is historically significant because he:",
+    opts:["Invented the internet","Created the first computer","Invented the movable-type printing press, triggering the first Information Revolution","Founded the first university in Europe"],
+    answer:2 },
+  { q:"The 'Gutenberg Parenthesis' refers to:",
+    opts:["A grammatical rule in German","The historical era dominated by centralized, authored, mass-produced printed text","The gap between rich and poor in information access","Gutenberg's personal journals"],
+    answer:1 },
+  { q:"The shift from Gutenberg-era media to social media represents a change from:",
+    opts:["Many-to-many to one-to-many communication","One-to-many to many-to-many communication","Private to public information","Analog to digital storage"],
+    answer:1 },
+  { q:"The Post-Truth Era describes a condition where:",
+    opts:["Only verified facts are shared online","Personal beliefs and emotions are more influential than objective facts","Governments control all information","Social media has been eliminated"],
+    answer:1 },
+  { q:"User-Generated Content is characteristic of which era?",
+    opts:["The Gutenberg Parenthesis","The Age of Enlightenment","The Social Media / Web 2.0 era","The Industrial Revolution"],
+    answer:2 },
+  { q:"The first Information Revolution was triggered by:",
+    opts:["The invention of electricity","The launch of the internet","The creation of the movable-type printing press (~1440s)","The development of the telegraph"],
+    answer:2 },
+  { q:"In the Post-Truth Era, misinformation thrives because:",
+    opts:["Facts are harder to find online","Personal beliefs and emotions carry more influence than objective facts","Governments actively spread false information","All media is now state-controlled"],
+    answer:1 },
+  { q:"Which of the following best characterizes the communication model of social media?",
+    opts:["One-to-many: professional publishers to passive audiences","Many-to-many: everyday users creating and sharing content with each other","One-to-one: private correspondence only","Government-to-citizen: official announcements only"],
+    answer:1 },
+
+  // ─── TOPIC 5: Biodiversity (6 items) ───
+  { section:"Topic 5: Biodiversity and Society",
+    q:"Biodiversity is described as a 'system backup for life' because:",
+    opts:["It stores data like a hard drive","It provides resilience — if one species fails, others sustain life","It prevents all environmental changes","It is controlled by technology"],
+    answer:1 },
+  { q:"Genetic Diversity refers to:",
+    opts:["The variety of habitats on Earth","The variety of different species in an area","The variety of genes within a single species","The number of ecosystems in a country"],
+    answer:2 },
+  { q:"Which of the following is identified as the PRIMARY threat to biodiversity?",
+    opts:["Nanotechnology","Genetic engineering","Habitat loss and species extinction","Social media misinformation"],
+    answer:2 },
+  { q:"Ecosystem Diversity refers to:",
+    opts:["The genes shared among species","The number of individuals in a species","The variety of habitats, communities, and ecological processes on Earth","The economic value of natural resources"],
+    answer:2 },
+  { q:"Species Diversity is defined as:",
+    opts:["The gene variety within one species","The variety of different species within a given area or ecosystem","The number of ecosystems on Earth","The rate at which species reproduce"],
+    answer:1 },
+  { q:"Which of the following is a direct benefit of biodiversity to human health?",
+    opts:["It powers the internet","It provides sources for medicine, clean air, water filtration, and food security","It generates electricity","It controls population growth"],
+    answer:1 },
+
+  // ─── TOPIC 6: Nanotechnology (8 items) ───
+  { section:"Topic 6: Nanotechnology",
+    q:"Nanotechnology operates at the scale of:",
+    opts:["1–100 micrometers","1–100 millimeters","1–100 nanometers","1–100 centimeters"],
+    answer:2 },
+  { q:"One nanometer is equal to:",
+    opts:["One millionth of a meter","One billionth of a meter","One trillionth of a meter","One thousandth of a meter"],
+    answer:1 },
+  { q:"Targeted Drug Delivery via nanotechnology is significant because:",
+    opts:["It distributes medicine to all cells equally","It replaces the immune system","It attacks only cancer or sick cells, minimizing harm to healthy tissue","It eliminates the need for surgery permanently"],
+    answer:2 },
+  { q:"Nano Surveillance raises ethical concerns primarily because:",
+    opts:["It is too expensive for governments","Nearly invisible nano-devices could monitor people without their knowledge, invading privacy","It harms biodiversity","It interferes with satellite signals"],
+    answer:1 },
+  { q:"Smart Fertilizers in agriculture, as an application of nanotechnology, work by:",
+    opts:["Replacing all natural fertilizers permanently","Releasing nutrients to crops only when needed, reducing waste and improving efficiency","Eliminating the need for water in farming","Genetically modifying plant DNA"],
+    answer:1 },
+  { q:"Water Purification through nanotechnology works by:",
+    opts:["Boiling water at the nanoscale","Filtering pollutants at the molecular level","Using electric currents to kill bacteria","Adding chemical compounds to neutralize toxins"],
+    answer:1 },
+  { q:"Nanotechnology is defined as:",
+    opts:["The science of manipulating visible materials","The science of manipulating matter at the nanoscale (1–100 nm) to create new materials with novel properties","The study of microscopic organisms","A branch of genetics focused on cell modification"],
+    answer:1 },
+  { q:"At the nanoscale, one nanometer is approximately:",
+    opts:["The width of a human hair","The size of a cell nucleus","About 10 hydrogen atoms wide","The diameter of a red blood cell"],
+    answer:2 },
+
+  // ─── TOPIC 7: Biotechnology & Gene Therapy (4 items) ───
+  { section:"Topic 7: Biotechnology & Gene Therapy",
+    q:"Gene Therapy is best described as:",
+    opts:["A surgery to replace organs","A technique that treats disease by altering, replacing, or correcting genetic material in cells","A form of nanotechnology used in agriculture","A public health policy for infectious diseases"],
+    answer:1 },
+  { q:"Somatic Gene Therapy differs from Germline Gene Therapy because:",
+    opts:["Somatic therapy targets reproductive cells; Germline does not","Somatic therapy changes are NOT inherited; Germline changes ARE inherited by future offspring","Somatic therapy is more expensive","Germline therapy is already widely approved"],
+    answer:1 },
+  { q:"Which type of gene therapy raises the most significant ethical concerns regarding future generations?",
+    opts:["Somatic Gene Therapy","Behavioral Therapy","Germline Gene Therapy","Targeted Drug Delivery"],
+    answer:2 },
+  { q:"According to the reviewer's ethical guidelines, gene therapy should NOT be used for:",
+    opts:["Treating genetic diseases","Correcting inherited disorders","Cosmetic purposes","Research with proper consent"],
+    answer:2 },
+
+  // ─── MIXED / COMPREHENSIVE (4 items) ───
+  { section:"Comprehensive Review",
+    q:"Which of the following pairs of concepts are BOTH from Heidegger's philosophy of technology?",
+    opts:["Eudaimonia and Virtue","Enframing and Standing Reserve","Algorithmic Bias and Trolley Problem","Genetic Diversity and Ecosystem Diversity"],
+    answer:1 },
+  { q:"The statement 'Technology should serve human dignity and flourishing — not the other way around' best aligns with which concept?",
+    opts:["Enframing","Standing Reserve","Eudaimonia and the Good Life","Calculative Thinking"],
+    answer:2 },
+  { q:"Which of the following correctly matches a term to its topic?",
+    opts:["Gutenberg Parenthesis → Nanotechnology","Germline Gene Therapy → AI Ethics","Algorithmic Bias → AI Ethics","Non-rivalrous → Biodiversity"],
+    answer:2 },
+  { q:"A self-driving car must decide whether to swerve and harm one passenger or stay on course and harm five pedestrians. Which AI ethics concept does this directly illustrate?",
+    opts:["Algorithmic Bias","The Trolley Problem","Nano Surveillance","Digital Inequality"],
+    answer:1 }
+];
+
+// ── Build quiz DOM ──
+const form = document.getElementById('quiz-form');
+let currentSection = '';
+
+questions.forEach((item, i) => {
+  if (item.section && item.section !== currentSection) {
+    currentSection = item.section;
+    const sh = document.createElement('div');
+    sh.className = 'section-heading';
+    sh.innerHTML = `<h2>${currentSection}</h2>`;
+    form.appendChild(sh);
+  }
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = `qcard-${i}`;
+  const optHtml = item.opts.map((opt, j) => `
+    <li>
+      <label class="option-label" id="label-${i}-${j}">
+        <input type="radio" name="q${i}" value="${j}"/>
+        ${opt}
+      </label>
+    </li>`).join('');
+  card.innerHTML = `
+    <div class="question-number">Question ${i+1} of ${questions.length}</div>
+    <div class="question-text">${item.q}</div>
+    <ul class="options-list">${optHtml}</ul>
+    <div class="result-badge" id="badge-${i}"></div>
+    <div class="correct-answer-note" id="note-${i}"></div>`;
+  form.appendChild(card);
+});
+
+function clearAll() {
+  if (!confirm('Clear all answers and reset the quiz?')) return;
+  questions.forEach((_, i) => {
+    document.querySelectorAll(`input[name="q${i}"]`).forEach(r => { r.checked = false; r.disabled = false; });
+    const card = document.getElementById(`qcard-${i}`);
+    card.className = 'question-card';
+    const badge = document.getElementById(`badge-${i}`);
+    badge.className = 'result-badge';
+    badge.style.display = 'none';
+    badge.innerHTML = '';
+    const note = document.getElementById(`note-${i}`);
+    note.style.display = 'none';
+    note.textContent = '';
+    questions[i].opts.forEach((_, j) => {
+      document.getElementById(`label-${i}-${j}`).className = 'option-label';
+    });
+  });
+  document.getElementById('scoreCard').style.display = 'none';
+  document.getElementById('submitBtn').disabled = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitQuiz() {
+  let correct = 0, incorrect = 0, skipped = 0;
+  questions.forEach((item, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const card = document.getElementById(`qcard-${i}`);
+    const badge = document.getElementById(`badge-${i}`);
+    const note = document.getElementById(`note-${i}`);
+    item.opts.forEach((_, j) => { document.getElementById(`label-${i}-${j}`).className = 'option-label'; });
+    if (!selected) {
+      skipped++;
+      card.className = 'question-card unanswered';
+      badge.className = 'result-badge unanswered-badge';
+      badge.innerHTML = '⚠️ Skipped — see correct answer below';
+      badge.style.display = 'flex';
+      document.getElementById(`label-${i}-${item.answer}`).classList.add('highlight-correct');
+      note.textContent = `✔ Correct Answer: ${item.opts[item.answer]}`;
+      note.style.display = 'block';
+    } else {
+      const val = parseInt(selected.value);
+      if (val === item.answer) {
+        correct++;
+        card.className = 'question-card correct';
+        badge.className = 'result-badge correct-badge';
+        badge.innerHTML = '✅ Correct!';
+        badge.style.display = 'flex';
+        document.getElementById(`label-${i}-${item.answer}`).classList.add('highlight-correct');
+      } else {
+        incorrect++;
+        card.className = 'question-card incorrect';
+        badge.className = 'result-badge incorrect-badge';
+        badge.innerHTML = '❌ Incorrect — see correct answer below';
+        badge.style.display = 'flex';
+        document.getElementById(`label-${i}-${val}`).classList.add('highlight-wrong');
+        document.getElementById(`label-${i}-${item.answer}`).classList.add('highlight-correct');
+        note.textContent = `✔ Correct Answer: ${item.opts[item.answer]}`;
+        note.style.display = 'block';
+      }
+    }
+    document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.disabled = true);
+  });
+
+  const total = questions.length;
+  const pct = Math.round((correct / total) * 100);
+  const remark = pct === 100 ? '🏆 Perfect Score!' : pct >= 90 ? '🌟 Excellent!' : pct >= 75 ? '👍 Good job!' : pct >= 60 ? '📚 Keep studying!' : '💪 More review needed!';
+  document.getElementById('scoreBig').textContent = `${pct}%`;
+  document.getElementById('scoreLabel').textContent = `${correct} out of ${total} correct — ${remark}`;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statIncorrect').textContent = incorrect;
+  document.getElementById('statSkipped').textContent = skipped;
+  const sc = document.getElementById('scoreCard');
+  sc.style.display = 'block';
+  setTimeout(() => { document.getElementById('scoreBar').style.width = pct + '%'; }, 100);
+  document.getElementById('submitBtn').disabled = true;
+  sc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function scrollToFirst() { document.getElementById('qcard-0').scrollIntoView({ behavior: 'smooth' }); }
+function retakeQuiz() { clearAll(); }
+</script>
+</body>
+</html>
+
